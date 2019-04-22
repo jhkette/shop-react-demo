@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Item from "./Item";
 import "./ItemPage.css";
 
-function ItemPage({ items }) {
-    // map over items
-    // use(id) key and item.name
+// importing item then rendering each item componentn for items 
+function ItemPage({
+  items,
+  onAddToCart
+}) {
   return (
     <ul className="ItemPage-items">
       {items.map(item =>
@@ -12,14 +15,20 @@ function ItemPage({ items }) {
           key={item.id}
           className="ItemPage-item"
         >
-          {item.name}
+          <Item
+            item={item}
+            onAddToCart={() =>
+              onAddToCart(item)}
+          />
         </li>
       )}
     </ul>
   );
 }
 ItemPage.propTypes = {
-  items: PropTypes.array.isRequired
+  items: PropTypes.array.isRequired,
+  onAddToCart:
+    PropTypes.func.isRequired
 };
 
 export default ItemPage;
