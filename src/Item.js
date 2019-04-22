@@ -5,7 +5,7 @@ import "./Item.css";
 // item takes an item prop and an add to cart prop too.
 // returning a div that then get rendered as an li by parent.
 
-const Item = ({ item, onAddToCart }) => (
+const Item = ({ item, children }) => (
   <div className="Item">
     <div className="Item-left">
       <div className="Item-image" />

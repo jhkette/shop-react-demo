@@ -76,7 +76,13 @@ class App extends React.Component {
       };
     });
 
-    return <CartPage items={cartItems} />;
+    return (
+      <CartPage
+        items={cartItems}
+        onAddOne={this.handleAddToCart}
+        onRemoveOne={this.handleRemoveOne}
+      />
+    );
   }
 
   render() {
