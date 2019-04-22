@@ -3,6 +3,7 @@ import Nav from "./Nav";
 import "./App.css";
 import ItemPage from "./ItemPage";
 import { items } from "./static-data";
+import CartPage from "./CartPage";
 
 class App extends React.Component {
   state = {
@@ -36,9 +37,39 @@ class App extends React.Component {
       case 0:
         return <ItemPage items={items} onAddToCart={this.handleAddToCart} />;
       case 1:
-        return <span>Cart</span>;
+        return this.renderCart();
     }
   }
+  // The reduce function works like a summation operation. It takes an optional initial value ({} here),
+  //  and then calls the given function with the accumulated total and the current array item. The value
+  //  returned from the function becomes the new total, and it moves on to the next item in the array. When
+  //  reduce is done, it returns the final total.Ceddia, Dave. Pure React: A step-by-step guide to mastering React. . Kindle Edition.
+
+  renderCart() {
+    // Count how many of each item
+    // is in the cart
+    let itemCounts = this.state.cart.reduce((itemCounts, itemId) => {
+      itemCounts[itemId] = itemCounts[itemId] || 0;
+      itemCounts[itemId]++;
+      return itemCounts;
+    }, {});
+
+    // Create an array of items
+    let cartItems = Object.keys(itemCounts).map(itemId => {
+      // Find the item by its id
+      var item = items.find(item => item.id === parseInt(itemId, 10));
+
+      // Create a new "item" that
+      // also has a 'count' property
+      return {
+        ...item,
+        count: itemCounts[itemId]
+      };
+    });
+
+    return <CartPage items={cartItems} />;
+  }
+
   render() {
     let { activeTab } = this.state;
     return (
