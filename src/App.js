@@ -40,6 +40,7 @@ class App extends React.Component {
         return this.renderCart();
     }
   }
+
   // The reduce function works like a summation operation. It takes an optional initial value ({} here),
   //  and then calls the given function with the accumulated total and the current array item. The value
   //  returned from the function becomes the new total, and it moves on to the next item in the array. When
@@ -55,6 +56,11 @@ class App extends React.Component {
     }, {});
 
     // Create an array of items
+    // Object.keys returns an array of the keys in an object.
+    // For instance Object.keys({a: 1, b: 2}) would return ['a', 'b'].
+    // Objects don’t have a built-in iterator forEach function like arrays do, so Object.keys
+    // makes it easier to iterate over the keys of an object.
+
     let cartItems = Object.keys(itemCounts).map(itemId => {
       // Find the item by its id
       var item = items.find(item => item.id === parseInt(itemId, 10));
@@ -62,6 +68,9 @@ class App extends React.Component {
       // Create a new "item" that
       // also has a 'count' property
       return {
+        // Note that the spread operator for arrays is officially part of ES6, but the one for objects is not.
+        //  However, object spread is supported by Babel, which Create React App is using under the hood to turn our
+        //  code into browser-compatible ES5.
         ...item,
         count: itemCounts[itemId]
       };
